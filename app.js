@@ -1,5 +1,5 @@
 const express = require('express') //引入express模組
-const { engine } = require('express-handlebars')
+const { engine } = require('express-handlebars') //引入express-handlebars的VIEW樣板引擎
 const app = express() // 建立了一個Express應用程式的實例，儲存在app常數中
 
 const port = 3000
@@ -7,9 +7,13 @@ const port = 3000
 const db = require('./models') //取得資料庫的model資料夾
 const restaurant = db.restaurant //取得model資料夾中restaurant檔案資料
 
-app.engine('.hbs', engine({extname: '.hbs'}));
-app.set('view engine', '.hbs');
-app.set('views', './views');
+
+
+app.engine('.hbs', engine({extname: '.hbs'})) //告訴express使用express-handlebars樣版引擎，並指定附檔名為.hbs
+app.set('view engine', '.hbs') // 告訴express使用express-handlebars樣版引擎來處理render畫面
+app.set('views', './views') //視覺文件儲存在'./view'的目錄中
+app.use(express.static('public')) //載入靜態檔案，包含Bootstrap的CSS和JS
+
 
 app.get('/', (req, res) => {
   res.render('index')
