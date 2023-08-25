@@ -13,14 +13,14 @@ app.engine('.hbs', engine({extname: '.hbs'})) //告訴express使用express-handl
 app.set('view engine', '.hbs') // 告訴express使用express-handlebars樣版引擎來處理render畫面
 app.set('views', './views') //視覺文件儲存在'./view'的目錄中
 app.use(express.static('public')) //載入靜態檔案，包含Bootstrap的CSS和JS
-
+app.use(express.urlencoded({ extended: true })) //使用此行來請求網址中獲取表單資料,否則就會回傳undefined的表單資料。
 
 app.get('/', (req, res) => {
-  res.render('index')
+  res.redirect('/restaurants')
 })
 
 app.get('/restaurants', (req, res) => {
-  return restaurant.findAll({ //使用findAll在restaurant中撈資料，此功能為非同步函式，後接.then語法
+  return restaurant.findAll({ //使用findAll在model資料夾中的restaurant.js中撈資料，此功能為非同步函式，後接.then語法
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], //從資料庫中撈出要的表格欄位
     raw: true //因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
   }) 
@@ -29,7 +29,7 @@ app.get('/restaurants', (req, res) => {
 })
 
 app.get('/restaurants/new', (req, res) => {
-  res.send('Add a new restaurant') //新增餐廳的頁面
+  return res.render('new') //新增餐廳的頁面
 })
 
 app.get('/restaurants/:id', (req, res) => {
@@ -43,7 +43,17 @@ app.get('/restaurants/:id/edit', (req,res) => {
 })
 
 app.post('/restaurants', (req, res) => {
-  res.send('Add a new restaurant') //新增餐廳
+  const name = req.body.name
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const google_map = req.body.google_map
+  const rating = req.body.rating
+  const description = req.body. description
+  return restaurant.create({ name, name_en, category, image, location, phone, google_map, rating, description })
+    .then(() => res.redirect('/restaurants'))
 })
 
 app.put('/restaurants/:id', (req, res) => {

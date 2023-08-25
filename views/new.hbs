@@ -1,0 +1,64 @@
+<head>
+  <meta charset="utf-8">
+  <title>restaurant-list</title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://kit.fontawesome.com/19499ea28b.js" crossorigin="anonymous"></script>
+</head>
+
+<header>
+  <!-- navigation -->
+  <nav class="navbar navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+          width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
+        我的餐廳清單
+      </a>
+    </div>
+  </nav>
+
+  <div class="banner"></div>
+</header>
+
+<form action="/restaurants" method="POST">
+  <div class="mb-3">
+    <label for="InputRestaurantName" class="form-label">餐廳名稱</label>
+    <input type="text" class="form-control" name="name" placeholder="please input name">
+  </div>
+  <div class="mb-3">
+    <label for="InputRestaurantName_en" class="form-label">餐廳英文名稱</label>
+    <input type="text" class="form-control" name="name_en" placeholder="please input name_en">
+  </div>
+  <div class="mb-3">
+    <label for="InputCategory" class="form-label">類別</label>
+    <input type="text" class="form-control" name="category" placeholder="please input category">
+  </div>
+  <div class="mb-3">
+    <label for="InputImage" class="form-label">餐廳圖片</label>
+    <input type="text" class="form-control" name="image" placeholder="please input image">
+  </div>
+  <div class="mb-3">
+    <label for="InputLocation" class="form-label">地址</label>
+    <input type="text" class="form-control" name="location" placeholder="please input location">
+  </div>
+  <div class="mb-3">
+    <label for="InputPhone" class="form-label">電話</label>
+    <input type="text" class="form-control" name="phone" placeholder="please input Phone">
+  </div>
+  <div class="mb-3">
+    <label for="InputGoogle_map" class="form-label">Google地圖網址</label>
+    <input type="text" class="form-control" name="google_map" placeholder="please input google_map">
+  </div>
+  <div class="mb-3">
+    <label for="InputRating" class="form-label">評分</label>
+    <input type="text" class="form-control" name="rating" placeholder="please input rating (1.0~5.0)">
+  </div>
+  <div class="mb-3">
+    <label for="InputDescription" class="form-label">描述</label>
+    <input type="text" class="form-control" name="description" placeholder="please input category">
+  </div>
+  <button type="submit">Add</button>
+</form>
+
+<script src="/javascripts/bootstrap.bundle.min.js"></script>
