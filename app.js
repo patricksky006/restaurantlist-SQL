@@ -20,13 +20,27 @@ app.get('/', (req, res) => {
 })
 
 app.get('/restaurants', (req, res) => {
-  return restaurant.findAll({ // 使用findAll在model資料夾中的restaurant.js中撈資料，此功能為非同步函式，後接.then語法
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
-    raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
+  const keyword = req.query.search?.trim();
+  
+  restaurant.findAll({
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    raw: true
   })
-    .then((restaurants) => res.render('index', { restaurants })) // 將找到的資料存入restaurants中，丟到後面的函式後處理傳到網頁畫面
-    .catch((err) => res.status(422).json(err))
-})
+    .then((restaurants) => {
+      const matchedRestaurants = keyword
+        ? restaurants.filter((restaurant) =>
+            Object.values(restaurant).some((property) => {
+              if (typeof property === 'string') {
+                return property.toLowerCase().includes(keyword.toLowerCase());
+              }
+            })
+          )
+        : restaurants;
+
+      res.render('index', { restaurants: matchedRestaurants, keyword });
+    })
+    .catch((err) => res.status(422).json(err));
+});
 
 app.get('/restaurants/new', (req, res) => {
   return res.render('new') // 新增餐廳的頁面
