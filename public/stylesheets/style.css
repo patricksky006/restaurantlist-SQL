@@ -20,6 +20,9 @@ header {
   filter: blur(3px);
 }
 
+#editName{
+  font-size: xx-large;
+}
 .search-bar .search-bar-outer {
   margin: 0 auto;
   max-width: 680px;
