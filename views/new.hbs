@@ -20,46 +20,53 @@
 
   <div class="banner"></div>
 </header>
-<p>新增餐廳</p>
-<form action="/restaurants" method="POST">
-  <div class="mb-3">
-    <label for="InputRestaurantName" class="form-label">餐廳名稱</label>
-    <input type="text" class="form-control" name="name" placeholder="please input name">
+
+<div class="'container">
+  <div class="d-flex justify-content-center">
+    <p id="editName">新增餐廳</p>
   </div>
-  <div class="mb-3">
-    <label for="InputRestaurantName_en" class="form-label">餐廳英文名稱</label>
-    <input type="text" class="form-control" name="name_en" placeholder="please input name_en">
+  <div class="d-flex justify-content-center">
+    <form action="/restaurants" method="POST" class="w-50">
+      <div class="mb-4">
+        <label for="InputRestaurantName" class="form-label">餐廳名稱</label>
+        <input type="text" class="form-control" name="name" placeholder="please input name">
+      </div>
+      <div class="mb-4">
+        <label for="InputRestaurantName_en" class="form-label">餐廳英文名稱</label>
+        <input type="text" class="form-control" name="name_en" placeholder="please input name_en">
+      </div>
+      <div class="mb-4">
+        <label for="InputCategory" class="form-label">類別</label>
+        <input type="text" class="form-control" name="category" placeholder="please input category">
+      </div>
+      <div class="mb-4">
+        <label for="InputImage" class="form-label">餐廳圖片</label>
+        <input type="text" class="form-control" name="image" placeholder="please input image">
+      </div>
+      <div class="mb-4">
+        <label for="InputLocation" class="form-label">地址</label>
+        <input type="text" class="form-control" name="location" placeholder="please input location">
+      </div>
+      <div class="mb-4">
+        <label for="InputPhone" class="form-label">電話</label>
+        <input type="text" class="form-control" name="phone" placeholder="please input Phone">
+      </div>
+      <div class="mb-4">
+        <label for="InputGoogle_map" class="form-label">Google地圖網址</label>
+        <input type="text" class="form-control" name="google_map" placeholder="please input google_map">
+      </div>
+      <div class="mb-4">
+        <label for="InputRating" class="form-label">評分</label>
+        <input type="text" class="form-control" name="rating" placeholder="please input rating (1.0~5.0)">
+      </div>
+      <div class="mb-4">
+        <label for="InputDescription" class="form-label">描述</label>
+        <input type="text" class="form-control" name="description" placeholder="please input category">
+      </div>
+      <button type="submit">Add</button>
+      <a href="/restaurants">back</a>
+    </form>
   </div>
-  <div class="mb-3">
-    <label for="InputCategory" class="form-label">類別</label>
-    <input type="text" class="form-control" name="category" placeholder="please input category">
-  </div>
-  <div class="mb-3">
-    <label for="InputImage" class="form-label">餐廳圖片</label>
-    <input type="text" class="form-control" name="image" placeholder="please input image">
-  </div>
-  <div class="mb-3">
-    <label for="InputLocation" class="form-label">地址</label>
-    <input type="text" class="form-control" name="location" placeholder="please input location">
-  </div>
-  <div class="mb-3">
-    <label for="InputPhone" class="form-label">電話</label>
-    <input type="text" class="form-control" name="phone" placeholder="please input Phone">
-  </div>
-  <div class="mb-3">
-    <label for="InputGoogle_map" class="form-label">Google地圖網址</label>
-    <input type="text" class="form-control" name="google_map" placeholder="please input google_map">
-  </div>
-  <div class="mb-3">
-    <label for="InputRating" class="form-label">評分</label>
-    <input type="text" class="form-control" name="rating" placeholder="please input rating (1.0~5.0)">
-  </div>
-  <div class="mb-3">
-    <label for="InputDescription" class="form-label">描述</label>
-    <input type="text" class="form-control" name="description" placeholder="please input category">
-  </div>
-  <button type="submit">Add</button>
-  <a href="/restaurants">back</a>
-</form>
+</div>
 
 <script src="/javascripts/bootstrap.bundle.min.js"></script>
