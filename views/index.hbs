@@ -48,7 +48,7 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
         {{#each restaurants as |restaurant|}}
-        <a href="/restaurants/{{restaurant.id}}" class="text-secondary">
+        {{!-- <a href="/restaurants/{{restaurant.id}}" class="text-secondary"> --}}
           <div class="card mb-3">
             <img class="card-img-top" src="{{restaurant.image}}"
               alt="{{restaurant.name}}">
@@ -58,15 +58,16 @@
               <div class="restaurant-category mb-1">
                 <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
               </div>
-
+              
               <span class="badge rounded-pill bg-danger font-weight-normal">
                 {{restaurant.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
-          
+              <a href="/restaurants/{{restaurant.id}}/edit">Edit</a>
+              <a href="/restaurants/{{restaurant.id}}">Detail</a>
             </div>
           </div>
-        </a>
+        {{!-- </a> --}}
       {{/each}}
       </div>
     </div>
