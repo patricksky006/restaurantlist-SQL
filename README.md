@@ -44,6 +44,7 @@ express server is running on http://localhost:3000
 ctrl + c
 ```
 ## 開發工具
+* Visual Studio Code v1.81.1
 * Git v2.41.0.window.3
 * npm 9.5.0
 * nvm 1.1.11
