@@ -58,13 +58,16 @@
               <div class="restaurant-category mb-1">
                 <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
               </div>
-              
+
               <span class="badge rounded-pill bg-danger font-weight-normal">
                 {{restaurant.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
               <a href="/restaurants/{{restaurant.id}}/edit">Edit</a>
               <a href="/restaurants/{{restaurant.id}}">Detail</a>
+              <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;" >
+              <button type="submit" class="btn btn-danger btn-sm px-0 py-0">Delete</button>
+              </form>
             </div>
           </div>
         {{!-- </a> --}}
