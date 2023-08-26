@@ -34,7 +34,11 @@ app.get('/restaurants/new', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  res.send(`第${id}個restaurants`) //第${ID}個餐廳的檢視頁面
+  return  restaurant.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], //從資料庫中撈出要的表格欄位
+    raw: true //因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
+  })
+    .then((restaurant) => res.render('detail', { restaurant }))
 })
 
 app.get('/restaurants/:id/edit', (req,res) => {
