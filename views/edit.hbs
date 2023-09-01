@@ -25,7 +25,11 @@
   <div class="d-flex justify-content-center">
     <p id="editName">編輯餐廳內容</p>
   </div>
-  
+  {{#if error}}
+  <div class="container d-flex justify-content-center" id="updatedSuccess">
+    <div>{{error}}</div>
+  </div>
+  {{/if}}
   <form action="/restaurants/{{restaurant.id}}?_method=PUT" method="POST">
     <div class="mb-4">
       <label for="InputRestaurantName" class="form-label">餐廳名稱</label>

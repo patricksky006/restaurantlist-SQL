@@ -25,6 +25,13 @@
   <div class="d-flex justify-content-center">
     <p id="editName">新增餐廳</p>
   </div>
+
+  {{#if error}}
+  <div class="container d-flex justify-content-center" id="updatedSuccess">
+    <div class="mt-5">{{error}}</div>
+  </div>
+  {{/if}}
+  
   <div class="d-flex justify-content-center">
     <form action="/restaurants" method="POST" class="w-50">
       <div class="mb-4">

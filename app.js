@@ -44,14 +44,13 @@ app.get('/restaurants', (req, res) => {
             })
           )
         : restaurants;
-
       res.render('index', { restaurants: matchedRestaurants, keyword, message: req.flash('success') });
     })
     .catch((err) => res.status(422).json(err));
 });
 
 app.get('/restaurants/new', (req, res) => {
-  return res.render('new') // 新增餐廳的頁面
+  return res.render('new', { error: req.flash('error') }) // 新增餐廳的頁面
 })
 
 app.get('/restaurants/:id', (req, res) => {
@@ -70,52 +69,72 @@ app.get('/restaurants/:id/edit', (req, res) => {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
     raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
   })
-    .then((restaurant) => res.render('edit', { restaurant }))
+    .then((restaurant) => res.render('edit', { restaurant, error: req.flash('error') }))
     .catch((err) => res.status(422).json(err))
 })
 
 app.post('/restaurants', (req, res) => {
-  const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
-  return restaurant.create({ name, name_en, category, image, location, phone, google_map, rating, description })
-    .then(() => {
-      req.flash('success', '餐廳已新增') // 進行新增動作時，透過flash存入ket-value值，並在/restaurants取出使用
-      return res.redirect('/restaurants')
+  try {
+    const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
+    return restaurant.create({ name, name_en, category, image, location, phone, google_map, rating, description })
+      .then(() => {
+        req.flash('success', '餐廳已新增') // 進行新增動作時，透過flash存入ket-value值，並在/restaurants取出使用
+        return res.redirect('/restaurants')
   })
-    .catch((err) => res.status(422).json(err))
+    .catch((error) => {
+      console.error(error)
+      req.flash('error', '新增失敗')
+      return res.redirect('back')
+    })
+  } catch (error) {
+    console.error(error)
+    return res.redirect('back')
+  }
+  
 })
 
 app.put('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  const body = req.body
+  try {
+    const id = req.params.id
+    const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
 
-  return restaurant.update({
-    name: body.name,
-    name_en: body.name_en,
-    category: body.category,
-    image: body.image,
-    location: body.location,
-    phone: body.phone,
-    google_map: body.google_map,
-    rating: body.rating,
-    description: body.description
-  }, {
+    return restaurant.update({name, name_en, category, image, location, phone, google_map, rating, description}, {
     where: { id }
   })
     .then(() => {
       req.flash('success', '內容已更新')
       res.redirect(`/restaurants/${id}`)
   })
-    .catch((err) => res.status(422).json(err))
+    .catch((error) => {
+      console.error(error)
+      req.flash('error', '更新失敗')
+      return res.redirect('back')
+    })
+  } catch (error) {
+      console.error(error)
+      return res.redirect('back')
+  }
+  
 })
 
 app.delete('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  return restaurant.destroy({ where: { id } })
-    .then(() => {
-      req.flash('success', '餐廳已刪除')
-      res.redirect('/restaurants')
-  })
-    .catch((err) => res.status(422).json(err))
+  try {
+    const id = req.params.id
+    return restaurant.destroy({ where: { id } })
+      .then(() => {
+        req.flash('success', '餐廳已刪除')
+        res.redirect('/restaurants')
+    })
+      .catch((error) => {
+      console.error(error)
+      req.flash('error', '刪除失敗')
+      return res.redirect('back')
+    })
+  } catch (error) {
+      console.error(error)
+      return res.redirect('back')
+  }
+  
 })
 
 app.listen(port, () => {
