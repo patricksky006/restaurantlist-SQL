@@ -8,7 +8,7 @@
 
 <header>
   <!-- navigation -->
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light bg-light d-flex">
     <div class="container">
       <a class="navbar-brand" href="/">
         <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
@@ -16,11 +16,20 @@
         我的餐廳清單
       </a>
     </div>
+    <!--新增餐廳-->
+    <div class="d-flex justify-content-center me-auto">
+      <div class="container">
+        <a href="/restaurants/new">Add a new restaurant</a>
+      </div>
+    </div>
+
   </nav>
 
   <div class="banner"></div>
+  
 </header>
 
+<div class="container d-flex">
 <!-- search bar -->
 <div class="container search-bar">
   <div class="search-bar-outer">
@@ -38,11 +47,18 @@
     </div>
   </div>
 </div>
-<!--新增餐廳-->
-<div class="d-flex justify-content-center">
-  <div class="container mt-5 w-auto btn">
-    <a href="/restaurants/new">Add a new restaurant</a>
-  </div>
+<div class="dropdown">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#">A->Z</a></li>
+    <li><a class="dropdown-item" href="#">Z->A</a></li>
+    <li><a class="dropdown-item" href="#">類別</a></li>
+    <li><a class="dropdown-item" href="#">地區</a></li>
+  </ul>
+</div>
 </div>
 
 <!-- restaurant list -->
