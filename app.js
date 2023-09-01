@@ -1,4 +1,6 @@
 const express = require('express') // 引入express模組
+const flash = require('connect-flash')
+const session = require('express-session')
 const { engine } = require('express-handlebars') // 引入express-handlebars的VIEW樣板引擎
 const methodOverride = require('method-override') // 引入method-override的模組
 const app = express() // 建立了一個Express應用程式的實例，儲存在app常數中
@@ -15,13 +17,19 @@ app.use(express.static('public')) // 載入靜態檔案，包含Bootstrap的CSS�
 app.use(express.urlencoded({ extended: true })) // 使用此行來請求網址中獲取表單資料,否則就會回傳undefined的表單資料。
 app.use(methodOverride('_method')) // 指定'_method'為query識別方法
 
+app.use(session({
+	secret: 'ThisIsSecret',
+	resave: false,
+	saveUninitialized: false
+}))
+app.use(flash())
+
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
 })
 
 app.get('/restaurants', (req, res) => {
   const keyword = req.query.search?.trim();
-  
   restaurant.findAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     raw: true
@@ -37,7 +45,7 @@ app.get('/restaurants', (req, res) => {
           )
         : restaurants;
 
-      res.render('index', { restaurants: matchedRestaurants, keyword });
+      res.render('index', { restaurants: matchedRestaurants, keyword, message: req.flash('success') });
     })
     .catch((err) => res.status(422).json(err));
 });
@@ -52,7 +60,7 @@ app.get('/restaurants/:id', (req, res) => {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
     raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
   })
-    .then((restaurant) => res.render('detail', { restaurant }))
+    .then((restaurant) => res.render('detail', { restaurant, message: req.flash('success') }))
     .catch((err) => res.status(422).json(err))
 })
 
@@ -67,17 +75,12 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 app.post('/restaurants', (req, res) => {
-  const name = req.body.name
-  const name_en = req.body.name_en
-  const category = req.body.category
-  const image = req.body.image
-  const location = req.body.location
-  const phone = req.body.phone
-  const google_map = req.body.google_map
-  const rating = req.body.rating
-  const description = req.body.description
+  const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
   return restaurant.create({ name, name_en, category, image, location, phone, google_map, rating, description })
-    .then(() => res.redirect('/restaurants'))
+    .then(() => {
+      req.flash('success', '餐廳已新增') // 進行新增動作時，透過flash存入ket-value值，並在/restaurants取出使用
+      return res.redirect('/restaurants')
+  })
     .catch((err) => res.status(422).json(err))
 })
 
@@ -98,14 +101,20 @@ app.put('/restaurants/:id', (req, res) => {
   }, {
     where: { id }
   })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => {
+      req.flash('success', '內容已更新')
+      res.redirect(`/restaurants/${id}`)
+  })
     .catch((err) => res.status(422).json(err))
 })
 
 app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return restaurant.destroy({ where: { id } })
-    .then(() => res.redirect('/restaurants'))
+    .then(() => {
+      req.flash('success', '餐廳已刪除')
+      res.redirect('/restaurants')
+  })
     .catch((err) => res.status(422).json(err))
 })
 

@@ -50,7 +50,7 @@
 <div class="dropdown">
   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
     aria-expanded="false">
-    Dropdown button
+    Sort
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="#">A->Z</a></li>
@@ -60,6 +60,13 @@
   </ul>
 </div>
 </div>
+<!--message-->
+
+{{#if message}}
+<div class="container d-flex justify-content-center" id="updatedSuccess">
+  <div class="mt-5" >{{message}}</div>
+</div>
+{{/if}}
 
 <!-- restaurant list -->
 <div class="container mt-5">
