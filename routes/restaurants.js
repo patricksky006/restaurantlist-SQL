@@ -22,13 +22,16 @@ router.get('/', (req, res) => {
             })
           )
         : restaurants;
-      res.render('index', { restaurants: matchedRestaurants, keyword, message: req.flash('success') });
+      res.render('index', { restaurants: matchedRestaurants, keyword });
     })
-    .catch((err) => res.status(422).json(err));
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗:('
+			next(error)
+    });
 });
 
 router.get('/new', (req, res) => {
-  return res.render('new', { error: req.flash('error') }) // 新增餐廳的頁面
+  return res.render('new') // 新增餐廳的頁面
 })
 
 router.get('/:id', (req, res) => {
@@ -37,8 +40,11 @@ router.get('/:id', (req, res) => {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
     raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
   })
-    .then((restaurant) => res.render('detail', { restaurant, message: req.flash('success') }))
-    .catch((err) => res.status(422).json(err))
+    .then((restaurant) => res.render('detail', { restaurant }))
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗:('
+			next(error)
+    })
 })
 
 router.get('/:id/edit', (req, res) => {
@@ -47,12 +53,14 @@ router.get('/:id/edit', (req, res) => {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
     raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
   })
-    .then((restaurant) => res.render('edit', { restaurant, error: req.flash('error') }))
-    .catch((err) => res.status(422).json(err))
+    .then((restaurant) => res.render('edit', { restaurant}))
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗:('
+			next(error)
+    })
 })
 
-router.post('/', (req, res) => {
-  try {
+router.post('/', (req, res, next) => {
     const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
     return restaurant.create({ name, name_en, category, image, location, phone, google_map, rating, description })
       .then(() => {
@@ -60,19 +68,12 @@ router.post('/', (req, res) => {
         return res.redirect('/restaurants')
   })
     .catch((error) => {
-      console.error(error)
-      req.flash('error', '新增失敗')
-      return res.redirect('back')
+      error.errorMessage = '新增失敗'
+      next(error)
     })
-  } catch (error) {
-    console.error(error)
-    return res.redirect('back')
-  }
-  
 })
 
 router.put('/:id', (req, res) => {
-  try {
     const id = req.params.id
     const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
 
@@ -84,19 +85,13 @@ router.put('/:id', (req, res) => {
       res.redirect(`/restaurants/${id}`)
   })
     .catch((error) => {
-      console.error(error)
-      req.flash('error', '更新失敗')
-      return res.redirect('back')
+      error.errorMessage = '更新失敗'
+      next(error)
     })
-  } catch (error) {
-      console.error(error)
-      return res.redirect('back')
-  }
-  
+
 })
 
 router.delete('/:id', (req, res) => {
-  try {
     const id = req.params.id
     return restaurant.destroy({ where: { id } })
       .then(() => {
@@ -104,15 +99,9 @@ router.delete('/:id', (req, res) => {
         res.redirect('/restaurants')
     })
       .catch((error) => {
-      console.error(error)
-      req.flash('error', '刪除失敗')
-      return res.redirect('back')
+      error.errorMessage = '刪除失敗'
+      next(error)
     })
-  } catch (error) {
-      console.error(error)
-      return res.redirect('back')
-  }
-  
 })
 
 module.exports = router
