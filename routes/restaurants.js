@@ -12,6 +12,8 @@ router.get('/', (req, res, next) => {
 	const limit = 6
   restaurant.findAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    offset: (page - 1) * limit,
+    limit,
     raw: true
   })
     .then((restaurants) => {
@@ -23,7 +25,7 @@ router.get('/', (req, res, next) => {
               }
             })
           )
-        : restaurants.slice((page - 1) * limit, page * limit);
+        : restaurants;
       res.render('index', { 
         restaurants: matchedRestaurants,
         prev: page > 1 ? page - 1 : page,

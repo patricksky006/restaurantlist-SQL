@@ -86,8 +86,8 @@
                   <i class="fas fa-star fa-xs"></i>
                 </span>
                 <span class="flex-grow-1"></span>
-                <button class="btn btn-primary btn-sm px-1 py-0 me-1" href="/restaurants/{{restaurant.id}}/edit">Edit</button>
-                <button class="btn btn-success btn-sm px-1 py-0 me-1" href="/restaurants/{{restaurant.id}}">Detail</button>
+                <a class="btn btn-primary btn-sm px-1 py-0 me-1" href="/restaurants/{{restaurant.id}}/edit" role="button">Edit</a>
+                <a class="btn btn-success btn-sm px-1 py-0 me-1" href="/restaurants/{{restaurant.id}}" role="button">Detail</a>
                 <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
                   <button type="submit" class="btn btn-danger btn-sm px-0 py-0">Delete</button>
               </div>
