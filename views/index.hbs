@@ -19,7 +19,7 @@
     <!--新增餐廳-->
     <div class="d-flex justify-content-center me-auto">
       <div class="container">
-        <a href="/restaurants/new">Add a new restaurant</a>
+        <a href="/restaurants/new" class="btn btn-info">Add a new restaurant</a>
       </div>
     </div>
 
@@ -80,15 +80,18 @@
               <div class="restaurant-category mb-1">
                 <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
               </div>
-
-              <span class="badge rounded-pill bg-danger font-weight-normal">
-                {{restaurant.rating}}
-                <i class="fas fa-star fa-xs"></i>
-              </span>
-              <a href="/restaurants/{{restaurant.id}}/edit">Edit</a>
-              <a href="/restaurants/{{restaurant.id}}">Detail</a>
-              <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;" >
-              <button type="submit" class="btn btn-danger btn-sm px-0 py-0">Delete</button>
+              <div class="d-flex justify-content-center">
+                <span class="badge rounded-pill bg-danger font-weight-normal">
+                  {{restaurant.rating}}
+                  <i class="fas fa-star fa-xs"></i>
+                </span>
+                <span class="flex-grow-1"></span>
+                <button class="btn btn-primary btn-sm px-1 py-0 me-1" href="/restaurants/{{restaurant.id}}/edit">Edit</button>
+                <button class="btn btn-success btn-sm px-1 py-0 me-1" href="/restaurants/{{restaurant.id}}">Detail</button>
+                <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-danger btn-sm px-0 py-0">Delete</button>
+              </div>
+              
               </form>
             </div>
           </div>
@@ -98,5 +101,18 @@
     </div>
   </div>
 </div>
+<!--分頁器開始-->
+<div class="d-flex justify-content-center mb-3">
+    <form action="/restaurants" method="GET" style="display: inline;">
+    <input type="hidden" name="page" value="{{prev}}">
+    <button type="submit" class="btn btn-primary me-3 py-0">prev</button>
+  </form>
+  <form action="/restaurants" method="GET" style="display: inline;">
+    <input type="hidden" name="page" value="{{next}}">
+    <button type="submit" class="btn btn-primary me-3 py-0" >next</button>
+  </form>
+  <span>目前第{{page}}頁</span>
+</div>
 
+<!--分頁器結束-->
 <script src="/javascripts/bootstrap.bundle.min.js"></script>

@@ -6,8 +6,10 @@ const router = express.Router()
 const db = require('../models') 
 const restaurant = db.restaurant 
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   const keyword = req.query.search?.trim();
+  const page = parseInt(req.query.page) || 1
+	const limit = 6
   restaurant.findAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     raw: true
@@ -21,8 +23,14 @@ router.get('/', (req, res) => {
               }
             })
           )
-        : restaurants;
-      res.render('index', { restaurants: matchedRestaurants, keyword });
+        : restaurants.slice((page - 1) * limit, page * limit);
+      res.render('index', { 
+        restaurants: matchedRestaurants,
+        prev: page > 1 ? page - 1 : page,
+			  next: page + 1,
+			  page,
+        keyword 
+      });
     })
     .catch((error) => {
       error.errorMessage = '資料取得失敗:('
@@ -30,11 +38,11 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/new', (req, res) => {
+router.get('/new', (req, res, next) => {
   return res.render('new') // 新增餐廳的頁面
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   const id = req.params.id
   return restaurant.findByPk(id, {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
@@ -47,7 +55,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', (req, res, next) => {
   const id = req.params.id
   return restaurant.findByPk(id, {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
@@ -73,7 +81,7 @@ router.post('/', (req, res, next) => {
     })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
     const id = req.params.id
     const { name, name_en, category, image, location, phone, google_map, rating, description} = req.body
 
