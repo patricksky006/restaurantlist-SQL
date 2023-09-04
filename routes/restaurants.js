@@ -7,7 +7,6 @@ const db = require('../models')
 const restaurant = db.restaurant 
 
 router.get('/', (req, res, next) => {
-  const keyword = req.query.search?.trim();
   const page = parseInt(req.query.page) || 1
 	const limit = 6
   const sort = req.query.sort 
@@ -27,22 +26,11 @@ router.get('/', (req, res, next) => {
     raw: true
   })
     .then((restaurants) => {
-      const matchedRestaurants = keyword
-        ? restaurants.filter((restaurant) =>
-            Object.values(restaurant).some((property) => {
-              if (typeof property === 'string') {
-                return property.toLowerCase().includes(keyword.toLowerCase());
-              }
-            })
-          )
-        : restaurants;
-        console.log(sort)
       res.render('index', { 
-        restaurants: matchedRestaurants,
+        restaurants,
         prev: page > 1 ? page - 1 : page,
 			  next: page + 1,
 			  page,
-        keyword,
         sort: sort,
       });
     })
@@ -53,13 +41,13 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/new', (req, res, next) => {
-  return res.render('new') // 新增餐廳的頁面
+  return res.render('new') 
 })
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id
   return restaurant.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], 
     raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
   })
     .then((restaurant) => res.render('detail', { restaurant }))
@@ -72,8 +60,8 @@ router.get('/:id', (req, res, next) => {
 router.get('/:id/edit', (req, res, next) => {
   const id = req.params.id
   return restaurant.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], // 從資料庫中撈出要的表格欄位
-    raw: true // 因在sequelize中的find功能會將結果轉換成model instances，而不是JavaScripts objects，所以sequelize有提供此參數藉以停用轉換。
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'], 
+    raw: true 
   })
     .then((restaurant) => res.render('edit', { restaurant}))
     .catch((error) => {
