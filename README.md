@@ -1,5 +1,5 @@
 # Restaurantlist-SQL 清單練習 
-![image](https://github.com/patricksky006/restaurantlist-SQL/blob/076a0e8613497f9d297095cf8a53fb9b0dba0a3f/PrintScreen/index_page2.png)
+![image](https://github.com/patricksky006/restaurantlist-SQL/blob/ef49c58a443908d41e7d310d3fb35cc11ebadf6e/PrintScreen/index_page2.png)
 
 
 ## 介紹
@@ -64,9 +64,3 @@ ctrl + c
 * connect-flash 0.1.1
 * dotenv 16.0.3
 * express-session 1.17.3
-
-## User Flow
-![image](https://github.com/patricksky006/restaurantlist-SQL/blob/be56df05b98931b0316e067c4e9678189c9ea33b/PrintScreen/UserFlow.png)
-
-## Design router
-![image](https://github.com/patricksky006/restaurantlist-SQL/blob/be56df05b98931b0316e067c4e9678189c9ea33b/PrintScreen/DesignRouter.png)
