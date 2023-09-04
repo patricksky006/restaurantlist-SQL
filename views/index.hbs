@@ -4,6 +4,11 @@
   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="https://kit.fontawesome.com/19499ea28b.js" crossorigin="anonymous"></script>
+  <script>
+    function submitSortForm() {
+        document.forms['sortForm'].submit();
+      }
+  </script>
 </head>
 
 <header>
@@ -48,13 +53,16 @@
   </div>
 </div>
 <!--分類器開始-->
-
+<form action="/restaurants" method="GET" style="display: inline;">
   <select class="form-select" name="sort" aria-label="Default select example">
     <option selected value="name_asc">A -> Z</option>
     <option value="name_desc">Z -> A</option>
     <option value="category">類別</option>
     <option value="location">地區</option>
   </select>
+  <input type="hidden" name="page" value="{{page}}">
+  <button type="submit" class="btn btn-primary me-3 py-0">Apply Sort</button>
+</form>
 
 <!--分類器結束-->
 </div>
@@ -77,6 +85,9 @@
 
               <div class="restaurant-category mb-1">
                 <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
+              </div>
+              <div class="restaurant-location mb-1">
+                <i class="fas fa-utensils pr-2"></i> {{restaurant.location}}
               </div>
               <div class="d-flex justify-content-center">
                 <span class="badge rounded-pill bg-danger font-weight-normal">
@@ -103,10 +114,12 @@
 <div class="d-flex justify-content-center mb-3">
     <form action="/restaurants" method="GET" style="display: inline;">
     <input type="hidden" name="page" value="{{prev}}">
+    <input type="hidden" name="sort" value="{{sort}}">
     <button type="submit" class="btn btn-primary me-3 py-0">prev</button>
   </form>
   <form action="/restaurants" method="GET" style="display: inline;">
     <input type="hidden" name="page" value="{{next}}">
+    <input type="hidden" name="sort" value="{{sort}}">
     <button type="submit" class="btn btn-primary me-3 py-0" >next</button>
   </form>
   <span>目前第{{page}}頁</span>

@@ -43,7 +43,7 @@ router.get('/', (req, res, next) => {
 			  next: page + 1,
 			  page,
         keyword,
-        sort: sort
+        sort: sort,
       });
     })
     .catch((error) => {
