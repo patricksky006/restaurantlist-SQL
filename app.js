@@ -5,6 +5,11 @@ const { engine } = require('express-handlebars') // 引入express-handlebars的V
 const methodOverride = require('method-override') // 引入method-override的模組
 const app = express() // 建立了一個Express應用程式的實例，儲存在app常數中
 
+if (process.env.NODE_ENV === 'development'){
+		require('dotenv').config()
+}
+console.log(process.env.SESSION_SECRET)
+
 const router = require('./routes/index')
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
@@ -18,7 +23,7 @@ app.use(express.urlencoded({ extended: true })) // 使用此行來請求網址�
 app.use(methodOverride('_method')) // 指定'_method'為query識別方法
 
 app.use(session({
-	secret: 'ThisIsSecret',
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false
 }))
