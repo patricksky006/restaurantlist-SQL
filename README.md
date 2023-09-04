@@ -35,7 +35,7 @@ $ npm install
 ```
 啟動環境設置:
 將環境變數NODE_ENV設置為development，需要有.env檔啟用SESSION_SECRET。
-```
+
 啟動專案:
 ```
 $ npm run start
