@@ -14,6 +14,11 @@ header {
   color: red;
 }
 
+.form-select{
+  width: 150px;
+  height: 40px;
+}
+
 #dropdownMenuButton1{
   background-color: #f0f0f0;
 }

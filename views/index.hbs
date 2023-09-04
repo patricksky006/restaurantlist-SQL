@@ -48,18 +48,14 @@
   </div>
 </div>
 <!--分類器開始-->
-<div class="dropdown">
-  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-    aria-expanded="false">
-    Sort
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#">A->Z</a></li>
-    <li><a class="dropdown-item" href="#">Z->A</a></li>
-    <li><a class="dropdown-item" href="#">類別</a></li>
-    <li><a class="dropdown-item" href="#">地區</a></li>
-  </ul>
-</div>
+
+  <select class="form-select" name="sort" aria-label="Default select example">
+    <option selected value="name_asc">A -> Z</option>
+    <option value="name_desc">Z -> A</option>
+    <option value="category">類別</option>
+    <option value="location">地區</option>
+  </select>
+
 <!--分類器結束-->
 </div>
 <!--message-->
@@ -117,4 +113,5 @@
 </div>
 
 <!--分頁器結束-->
+
 <script src="/javascripts/bootstrap.bundle.min.js"></script>

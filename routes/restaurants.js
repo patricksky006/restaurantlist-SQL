@@ -10,10 +10,20 @@ router.get('/', (req, res, next) => {
   const keyword = req.query.search?.trim();
   const page = parseInt(req.query.page) || 1
 	const limit = 6
+  const sort = req.query.sort 
+
+  const sortOptions = {
+    name_asc: [['name', 'ASC']],
+    name_desc: [['name', 'DESC']],
+    category: [['category', 'ASC']],
+    location: [['location', 'ASC']],
+  };
+
   restaurant.findAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     offset: (page - 1) * limit,
     limit,
+    order: sortOptions[sort],
     raw: true
   })
     .then((restaurants) => {
@@ -26,12 +36,14 @@ router.get('/', (req, res, next) => {
             })
           )
         : restaurants;
+        console.log(sort)
       res.render('index', { 
         restaurants: matchedRestaurants,
         prev: page > 1 ? page - 1 : page,
 			  next: page + 1,
 			  page,
-        keyword 
+        keyword,
+        sort: sort
       });
     })
     .catch((error) => {
