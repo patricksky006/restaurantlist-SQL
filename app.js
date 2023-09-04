@@ -8,7 +8,6 @@ const app = express() // 建立了一個Express應用程式的實例，儲存在
 if (process.env.NODE_ENV === 'development'){
 		require('dotenv').config()
 }
-console.log(process.env.SESSION_SECRET)
 
 const router = require('./routes/index')
 const messageHandler = require('./middlewares/message-handler')
