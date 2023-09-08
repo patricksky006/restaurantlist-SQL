@@ -2,7 +2,9 @@ const express = require('express') // 引入express模組
 const flash = require('connect-flash')
 const session = require('express-session')
 const { engine } = require('express-handlebars') // 引入express-handlebars的VIEW樣板引擎
-const methodOverride = require('method-override') // 引入method-override的模組
+const methodOverride = require('method-override') 
+const passport = require('passport') 
+
 const app = express() // 建立了一個Express應用程式的實例，儲存在app常數中
 
 if (process.env.NODE_ENV === 'development'){
@@ -28,6 +30,7 @@ app.use(session({
 }))
 app.use(flash())
 
+app.use(passport.initialize())
 app.use(messageHandler)
 app.use(router)
 app.use(errorHandler)

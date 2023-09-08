@@ -7,6 +7,7 @@ const db = require('../models')
 const restaurant = db.restaurant 
 
 router.get('/', (req, res, next) => {
+  console.log('session', req.session)
   const page = parseInt(req.query.page) || 1
 	const limit = 6
   const sort = req.query.sort 

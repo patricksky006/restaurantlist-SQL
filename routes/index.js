@@ -3,11 +3,39 @@
 const express = require('express')
 const router = express.Router()
 
-const restaurants = require('./restaurants')
-const searchRouter = require('./search');
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
 
 const db = require('../models');
 const User = db.User
+
+passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, done) => {
+  return User.findOne({
+    attributes: ['id', 'name', 'email', 'password'],
+    where: { email: username },
+    raw: true
+  })
+    .then((foundUser)=> {
+      if (!foundUser || foundUser.password !== password) {
+        return done(null, false, { message: 'email或密碼錯誤'}) //驗證失敗，則呼叫callback函式進入錯誤處理，第三個參數可輸入有錯誤時的物件
+      }
+      return done(null, foundUser) // 驗證成功，則呼叫callback 函式, serializeUser 將驗證資料存入session
+    })
+    .catch((error) => {
+      error.errorMessage = '登入失敗'
+      done(error)
+    })
+}))
+
+passport.serializeUser((foundUser, done) => {  //指定要找到foundUser的id, name, email等資料存入session，之後在登入流程中呼叫一次
+  const { id, name, email } = foundUser
+  return done(null, { id, name, email })
+})
+
+const restaurants = require('./restaurants')
+const searchRouter = require('./search');
+
+
 
 router.use('/restaurants', restaurants)
 router.use('/search', searchRouter);
@@ -60,9 +88,11 @@ router.post('/users', (req, res, next) => {
     })
 })
 
-router.post('/login', (req, res) => {
-  res.send('POST/login, 登入使用者')
-})
+router.post('/login', passport.authenticate('local', {  //第一個參數式Strategy名稱(local), 第二個是自訂的選項
+  successRedirect: '/restaurants',
+  failureRedirect: '/login',
+  failureFlash: true //passport有整合flash-session功能，開啟後可使用flash
+}))
 
 router.post('/logout', (req, res) => {
   res.send('POST/logout, 登出使用者')
