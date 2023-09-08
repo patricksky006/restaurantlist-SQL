@@ -1,0 +1,54 @@
+<head>
+  <meta charset="utf-8">
+  <title>restaurant-list</title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://kit.fontawesome.com/19499ea28b.js" crossorigin="anonymous"></script>
+</head>
+
+<header>
+  <!-- navigation -->
+  <nav class="navbar navbar-light bg-light d-flex">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+          width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
+        我的餐廳清單
+      </a>
+    </div>
+  </nav>
+
+  <div class="banner"></div>
+
+</header>
+
+<div>
+  <h1>註冊帳號</h1>
+  <form action="/users" method="POST">
+    <div class="mb-3">
+      <label for="name" class="form-label">姓名</label>
+      <input type="text" class="form-control" name="name" aria-describedby="nameDescription" placeholder="請輸入姓名">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">信箱</label>
+      <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="請輸入信箱">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">密碼</label>
+      <input type="password" class="form-control" name="password" placeholder="請輸入密碼">
+    </div>
+    <div class="mb-3">
+      <label for="confirmedPassword" class="form-label">再次輸入相同密碼</label>
+      <input type="password" class="form-control" name="confirmedPassword" placeholder="再次輸入相同密碼">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div>
+  <button>Facebook Login</button>
+</div>
+<div>
+  <span>Already have an account?</span> <a href="/login">Login</a>
+</div>
+
+<script src="/javascripts/bootstrap.bundle.min.js"></script>

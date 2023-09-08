@@ -21,10 +21,11 @@
         我的餐廳清單
       </a>
     </div>
-    <!--新增餐廳-->
+    <!--新增餐廳與登出按鈕-->
     <div class="d-flex justify-content-center me-auto">
       <div class="container">
         <a href="/restaurants/new" class="btn btn-info">Add a new restaurant</a>
+        {{>logout}}
       </div>
     </div>
 
@@ -54,14 +55,12 @@
 </div>
 <!--分類器開始-->
 <form action="/restaurants" method="GET" style="display: inline;">
-  <select class="form-select" name="sort" aria-label="Default select example">
+  <select class="form-select" name="sort" aria-label="Default select example" onchange="this.form.submit()">
     <option selected value="name_asc">A -> Z</option>
     <option value="name_desc">Z -> A</option>
     <option value="category">類別</option>
     <option value="location">地區</option>
   </select>
-  <input type="hidden" name="page" value="{{page}}">
-  <button type="submit" class="btn btn-primary me-3 py-0">Apply Sort</button>
 </form>
 
 <!--分類器結束-->
