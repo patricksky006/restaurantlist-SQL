@@ -32,12 +32,16 @@ passport.serializeUser((foundUser, done) => {  //指定要找到foundUser的id, 
   return done(null, { id, name, email })
 })
 
+passport.deserializeUser((foundUser, done) => { //第一個參數是取出登入時存入在session中的使用者，第二個參數callback會將使用者存入req.user中，提供給router使用
+  done(null, { id: foundUser.id })
+})
+
 const restaurants = require('./restaurants')
 const searchRouter = require('./search');
+const authHandler = require('../middlewares/auth-handler');
 
 
-
-router.use('/restaurants', restaurants)
+router.use('/restaurants',authHandler, restaurants)
 router.use('/search', searchRouter);
 
 router.get('/', (req, res) => {
@@ -95,7 +99,13 @@ router.post('/login', passport.authenticate('local', {  //第一個參數式Stra
 }))
 
 router.post('/logout', (req, res) => {
-  res.send('POST/logout, 登出使用者')
+  req.logout((error) => {
+    if (error) {
+      next(error)
+    }
+
+    return res.redirect('/login')
+  })
 })
 
 module.exports = router

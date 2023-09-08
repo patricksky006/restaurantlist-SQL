@@ -30,7 +30,8 @@ app.use(session({
 }))
 app.use(flash())
 
-app.use(passport.initialize())
+app.use(passport.initialize()) //啟用passport
+app.use(passport.session()) //啟用passport.session，處理登入後的驗證功能 
 app.use(messageHandler)
 app.use(router)
 app.use(errorHandler)
