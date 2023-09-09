@@ -10,7 +10,7 @@ const restaurants = require('./restaurants')
 const searchRouter = require('./search')
 const usersRouter = require('./users')
 const authHandler = require('../middlewares/auth-handler');
-
+const bcrypt = require('bcryptjs')
 
 router.use('/restaurants',authHandler, restaurants)
 router.use('/search', searchRouter);
@@ -26,10 +26,17 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
     raw: true
   })
     .then((foundUser)=> {
-      if (!foundUser || foundUser.password !== password) {
+      if (!foundUser) {
         return done(null, false, { message: 'email或密碼錯誤'}) //驗證失敗，則呼叫callback函式進入錯誤處理，第三個參數可輸入有錯誤時的物件
       }
-      return done(null, foundUser) // 驗證成功，則呼叫callback 函式, serializeUser 將驗證資料存入session
+
+      return bcrypt.compare(password, foundUser.password)
+        .then((isMatch) => {
+          if (!isMatch) {
+            return done(null, false, { message: 'email或密碼錯誤'}) //驗證失敗，則呼叫callback函式進入錯誤處理，第三個參數可輸入有錯誤時的物件
+          }
+          return done(null, foundUser) // 驗證成功，則呼叫callback 函式, serializeUser 將驗證資料存入session
+        })
     })
     .catch((error) => {
       error.errorMessage = '登入失敗'

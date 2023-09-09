@@ -2,6 +2,7 @@
 
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 
 const db = require('../models');
 const User = db.User
@@ -25,7 +26,10 @@ router.post('/', (req, res, next) => {
         return res.redirect('back')
       }
 
-      return User.create({ name, email, password})
+      return bcrypt.hash(password, 10)
+        .then((hashPassword) => {
+          return User.create({ name, email, password: hashPassword})
+        })
         .then((createdUser) => {
           if (!createdUser) {
             req.flash('error', '資料庫有異常，註冊失敗')
