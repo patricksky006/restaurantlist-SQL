@@ -11,6 +11,7 @@ const searchRouter = require('./search')
 const usersRouter = require('./users')
 const authHandler = require('../middlewares/auth-handler');
 const bcrypt = require('bcryptjs')
+const FacebookStrategy = require('passport-facebook')
 
 router.use('/restaurants',authHandler, restaurants)
 router.use('/search', searchRouter);
@@ -44,6 +45,40 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
     })
 }))
 
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL:  process.env.FACEBOOK_CALLBACK_URL,
+    profileFields: ['id', 'displayName', 'email'] 
+  },
+  (accessToken, refreshToken, profile, done) => {
+    const email = profile.emails[0].value
+    const name = profile.displayName
+
+    return User.findOne({
+    attributes: ['id', 'name', 'email'],
+    where: { email },
+    raw: true
+  })
+    .then((foundUser)=> {
+      if (foundUser) return done(null, foundUser)
+
+      const randomPwd = Math.random().toString(36).slice(-8)
+
+      return bcrypt.hash(randomPwd, 10)
+        .then((hash) => {
+          return User.create({ name, email, password: hash })
+        })
+        .then((user) => done(null, { id: user.id, name: user.name, email: user.email }))
+    })
+    .catch((error) => {
+      error.errorMessage = '登入失敗'
+      done(error)
+    })
+  }
+));
+
+
 passport.serializeUser((foundUser, done) => {  //指定要找到foundUser的id, name, email等資料存入session，之後在登入流程中呼叫一次
   const { id, name, email } = foundUser
   return done(null, { id, name, email })
@@ -74,6 +109,16 @@ router.post('/login', passport.authenticate('local', {  //第一個參數式Stra
   failureRedirect: '/login',
   failureFlash: true //passport有整合flash-session功能，開啟後可使用flash
 }))
+
+router.get('/login/facebook', passport.authenticate('facebook', { scope: ['email'] })) //登入facebook的路由，取得資料授權
+
+router.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {  //Facebook重新導向程式的登入頁
+  successRedirect: '/restaurants',
+  failureRedirect: '/login',
+  failureFlash: true //passport有整合flash-session功能，開啟後可使用flash
+})
+)
+
 
 router.post('/logout', (req, res) => {
   req.logout((error) => {
