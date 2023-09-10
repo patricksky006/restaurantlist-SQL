@@ -4,7 +4,7 @@
 
 ## 介紹
 
-- 實踐新增(create)、瀏覽(Read)、更新(update)和刪除(delete) 餐廳清單、搜尋餐廳內容和註冊帳號密碼的練習專案，結合了網頁程式和SQL資料庫的應用。
+- 實踐收藏餐廳功能的練習專案，結合了網頁程式和SQL資料庫的應用。
 
 ## 動機
 - 學習成為一個後端工程師
@@ -48,12 +48,12 @@ $ cd restaurantlist-SQL
 $ npm install
 ```
 啟動環境設置:
-將環境變數NODE_ENV設置為development，需要有.env檔啟用相關環境參數。
-.env檔環境參數如下
-SESSION_SECRET: 自行設定
-FACEBOOK_CLIENT_ID: 自行設定
-FACEBOOK_CLIENT_SECRET: 自行設定
-FACEBOOK_CALLBACK_URL: 自行設定
+將環境變數NODE_ENV設置為development，需要有.env檔啟用相關環境參數。  
+.env檔環境參數如下  
+SESSION_SECRET: 自行設定  
+FACEBOOK_CLIENT_ID: 自行設定  
+FACEBOOK_CLIENT_SECRET: 自行設定  
+FACEBOOK_CALLBACK_URL: 自行設定  
 
 資料庫請使用MySQL，需設置種子資料:
 ```
