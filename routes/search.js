@@ -8,8 +8,10 @@ const restaurant = db.restaurant;
 
 router.get('/', (req, res, next) => {
   const keyword = req.query.search?.trim();
+  const userId = req.user.id //此id是由passport套件提供
 
   if (!keyword) {
+    req.flash('success', '請在搜尋欄輸入關鍵字')
     return res.redirect('/restaurants');
   }
 
@@ -26,7 +28,9 @@ router.get('/', (req, res, next) => {
         'google_map',
         'rating',
         'description',
+        'userId',
       ],
+      where: { userId },
       raw: true,
     })
     .then((restaurants) => {
@@ -39,6 +43,11 @@ router.get('/', (req, res, next) => {
             })
           )
         : restaurants;
+      if (matchedRestaurants.length === 0) {
+        req.flash('success', '沒有找到符合的餐廳')
+        return res.redirect('/restaurants')
+      }
+
       res.render('index', {
         restaurants: matchedRestaurants ,
         keyword,
