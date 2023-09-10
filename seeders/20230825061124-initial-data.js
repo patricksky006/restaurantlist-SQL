@@ -7,7 +7,7 @@ const path = require('path')
 const bcrypt = require('bcryptjs')
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     let transaction
     try {
       // 为了避免處理資料失誤，使用 transaction
@@ -22,7 +22,7 @@ module.exports = {
           email: 'user1@example.com',
           password: hash,
           createdAt: new Date(),
-          updatedAt: new Date(),
+          updatedAt: new Date()
         },
         {
           id: 2,
@@ -30,8 +30,8 @@ module.exports = {
           email: 'user2@example.com',
           password: hash,
           createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+          updatedAt: new Date()
+        }
       ], { transaction })
       // 新增資料庫種子資料
       const jsonFilePath = path.resolve(__dirname, '../public/jsons/restaurant.json') // 找到 JSON 檔案位置
@@ -39,13 +39,13 @@ module.exports = {
       const restaurants = JSON.parse(jsonData).results // 將文件內容中 results 下的內容取出來
       const restaurantUserMapping = {
         1: [1, 2, 3, 7],
-        2: [4, 5, 6, 8],
+        2: [4, 5, 6, 8]
       }
       const dataWithTimestamps = restaurants.map((restaurant, index) => ({
         ...restaurant,
         userId: restaurantUserMapping[1].includes(index + 1) ? 1 : 2,
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       }))
       await queryInterface.bulkInsert('Restaurants', dataWithTimestamps, { transaction })
       await transaction.commit()
@@ -54,8 +54,8 @@ module.exports = {
     }
   },
 
-  async down(queryInterface, Sequelize) {
+  async down (queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null)
     await queryInterface.bulkDelete('Restaurants', null)
-  },
+  }
 }

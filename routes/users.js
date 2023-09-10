@@ -1,10 +1,10 @@
-//使用者帳號密碼路由模組
+// 使用者帳號密碼路由模組
 
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 
-const db = require('../models');
+const db = require('../models')
 const User = db.User
 
 router.post('/', (req, res, next) => {
@@ -18,8 +18,8 @@ router.post('/', (req, res, next) => {
     req.flash('error', '輸入密碼與再次輸入密碼不相符')
     return res.redirect('back')
   }
-  
-  return User.count({ where: {email} })
+
+  return User.count({ where: { email } })
     .then((countEmail) => {
       if (countEmail > 0) {
         req.flash('error', '此信箱已經註冊過了')
@@ -28,7 +28,7 @@ router.post('/', (req, res, next) => {
 
       return bcrypt.hash(password, 10)
         .then((hashPassword) => {
-          return User.create({ name, email, password: hashPassword})
+          return User.create({ name, email, password: hashPassword })
         })
         .then((createdUser) => {
           if (!createdUser) {

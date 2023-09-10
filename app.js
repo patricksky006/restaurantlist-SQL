@@ -2,18 +2,18 @@ const express = require('express') // 引入express模組
 const flash = require('connect-flash')
 const session = require('express-session')
 const { engine } = require('express-handlebars') // 引入express-handlebars的VIEW樣板引擎
-const methodOverride = require('method-override') 
+const methodOverride = require('method-override')
 
 const app = express() // 建立了一個Express應用程式的實例，儲存在app常數中
 
-if (process.env.NODE_ENV === 'development'){
-		require('dotenv').config()
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
 }
 
 const router = require('./routes/index')
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
-const passport = require('./config/passport') 
+const passport = require('./config/passport')
 const port = 3000
 
 app.engine('.hbs', engine({ extname: '.hbs' })) // 告訴express使用express-handlebars樣版引擎，並指定附檔名為.hbs
@@ -24,14 +24,14 @@ app.use(express.urlencoded({ extended: true })) // 使用此行來請求網址�
 app.use(methodOverride('_method')) // 指定'_method'為query識別方法
 
 app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
 }))
 app.use(flash())
 
-app.use(passport.initialize()) //啟用passport
-app.use(passport.session()) //啟用passport.session，處理登入後的驗證功能 
+app.use(passport.initialize()) // 啟用passport
+app.use(passport.session()) // 啟用passport.session，處理登入後的驗證功能
 app.use(messageHandler)
 app.use(router)
 app.use(errorHandler)

@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const { sequelize } = require('../models');
+const { sequelize } = require('../models')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -19,4 +19,4 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn('restaurants', 'userId')
   }
-};
+}

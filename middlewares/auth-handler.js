@@ -1,4 +1,4 @@
-//處理登入後驗證邏輯的handler
+// 處理登入後驗證邏輯的handler
 
 module.exports = (req, res, next) => {
   if (req.isAuthenticated()) {
