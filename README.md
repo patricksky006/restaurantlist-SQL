@@ -57,7 +57,7 @@ FACEBOOK_CALLBACK_URL: 自行設定
 
 資料庫請使用MySQL，需設置種子資料:
 ```
-npx sequelize-cli db:seed:all
+$ npx sequelize-cli db:seed:all
 ```
 啟動專案:
 ```
@@ -98,6 +98,9 @@ ctrl + c
 * sequelize-cli: 6.6.0
 
 ## 相關網頁截圖
+---
 ![image](https://github.com/patricksky006/restaurantlist-SQL/blob/main/PrintScreen/Login.png)
+---
 ![image](https://github.com/patricksky006/restaurantlist-SQL/blob/main/PrintScreen/register.png)
+---
 ![image](https://github.com/patricksky006/restaurantlist-SQL/blob/main/PrintScreen/index_page_final.png)
