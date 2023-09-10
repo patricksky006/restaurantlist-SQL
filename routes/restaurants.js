@@ -1,4 +1,4 @@
-// restaurants 路由模組
+// 餐廳CRUD路由模組
 
 const express = require('express')
 const router = express.Router()

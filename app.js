@@ -3,7 +3,6 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const { engine } = require('express-handlebars') // 引入express-handlebars的VIEW樣板引擎
 const methodOverride = require('method-override') 
-const passport = require('passport') 
 
 const app = express() // 建立了一個Express應用程式的實例，儲存在app常數中
 
@@ -14,6 +13,7 @@ if (process.env.NODE_ENV === 'development'){
 const router = require('./routes/index')
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
+const passport = require('./config/passport') 
 const port = 3000
 
 app.engine('.hbs', engine({ extname: '.hbs' })) // 告訴express使用express-handlebars樣版引擎，並指定附檔名為.hbs

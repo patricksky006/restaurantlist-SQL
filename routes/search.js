@@ -1,4 +1,4 @@
-// search.js
+// 搜尋功能路由模組
 
 const express = require('express');
 const router = express.Router();
