@@ -98,9 +98,9 @@ ctrl + c
 * sequelize-cli: 6.6.0
 
 ## 相關網頁截圖
----
+***
 ![image](https://github.com/patricksky006/restaurantlist-SQL/blob/main/PrintScreen/Login.png)
----
+***
 ![image](https://github.com/patricksky006/restaurantlist-SQL/blob/main/PrintScreen/register.png)
----
+***
 ![image](https://github.com/patricksky006/restaurantlist-SQL/blob/main/PrintScreen/index_page_final.png)
