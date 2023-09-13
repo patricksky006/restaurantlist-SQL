@@ -9,8 +9,23 @@ const restaurant = db.restaurant
 router.get('/', (req, res, next) => {
   const page = parseInt(req.query.page) || 1
   const limit = 6
-  const sort = req.query.sort
+  const sort = req.query.sort || 'name_asc'
   const userId = req.user.id // 此id是由passport套件提供
+  
+  let sort1 =0
+  let sort2 =0
+  let sort3 =0
+  let sort4 =0
+  
+  if (sort === 'name_asc') {
+    sort1 = 1
+  } else if (sort === 'name_desc') {
+    sort2 = 1
+  } else if (sort === 'category') {
+    sort3 = 1
+  } else if (sort === 'location') {
+    sort4 = 1
+  } 
 
   const sortOptions = {
     name_asc: [['name', 'ASC']],
@@ -19,6 +34,7 @@ router.get('/', (req, res, next) => {
     location: [['location', 'ASC']]
   }
 
+  
   restaurant.findAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     where: { userId },
@@ -33,7 +49,11 @@ router.get('/', (req, res, next) => {
         prev: page > 1 ? page - 1 : page,
 			  next: page + 1,
 			  page,
-        sort
+        sort,
+        sort1,
+        sort2,
+        sort3,
+        sort4
       })
     })
     .catch((error) => {

@@ -56,10 +56,10 @@
 <!--分類器開始-->
 <form action="/restaurants" method="GET" style="display: inline;">
   <select class="form-select" name="sort" aria-label="Default select example" onchange="this.form.submit()">
-    <option selected value="name_asc">A -> Z</option>
-    <option value="name_desc">Z -> A</option>
-    <option value="category">類別</option>
-    <option value="location">地區</option>
+    <option value="name_asc" {{#if sort1}} selected {{/if}}>A -> Z</option>
+    <option value="name_desc" {{#if sort2}} selected {{/if}}>Z -> A</option>
+    <option value="category" {{#if sort3}} selected {{/if}}>類別</option>
+    <option value="location" {{#if sort4}} selected {{/if}}>地區</option>
   </select>
 </form>
 
