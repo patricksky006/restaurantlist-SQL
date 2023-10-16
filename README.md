@@ -55,6 +55,15 @@ FACEBOOK_CLIENT_ID: 自行設定
 FACEBOOK_CLIENT_SECRET: 自行設定  
 FACEBOOK_CALLBACK_URL: 自行設定  
 
+設定資料庫MySQL
+需要與 config/config.json 一致
+```
+create database restaurant;
+```
+建立資料表
+```
+npx sequelize db:migrate
+```
 資料庫請使用MySQL，需設置種子資料:
 ```
 $ npx sequelize-cli db:seed:all
