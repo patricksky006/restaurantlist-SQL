@@ -37,15 +37,15 @@ CRUD功能:
 
 將專案複製到本地:
 ```
-$ git clone https://github.com/patricksky006/restaurantlist-SQL.git
+git clone https://github.com/patricksky006/restaurantlist-SQL.git
 ```
 進入專案資料夾:
 ```
-$ cd restaurantlist-SQL
+cd restaurantlist-SQL
 ```
 安裝npm:
 ```
-$ npm install
+npm install
 ```
 啟動環境設置:
 將環境變數NODE_ENV設置為development，需要有.env檔啟用相關環境參數。  
@@ -66,11 +66,11 @@ npx sequelize db:migrate
 ```
 資料庫請使用MySQL，需設置種子資料:
 ```
-$ npx sequelize-cli db:seed:all
+npx sequelize-cli db:seed:all
 ```
 啟動專案:
 ```
-$ npm run start
+npm run start
 ```
 成功時，終端機會顯示以下訊息，請打開瀏覽器進入網址(http://localhost:3000):
 ```
