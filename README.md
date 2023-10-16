@@ -64,7 +64,7 @@ create database restaurant;
 ```
 npx sequelize db:migrate
 ```
-資料庫請使用MySQL，需設置種子資料:
+設置種子資料:
 ```
 npx sequelize-cli db:seed:all
 ```
